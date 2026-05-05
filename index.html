@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FATSOCIAL | Digital Asset Marketplace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .neo-brutal { border: 3px solid #000; box-shadow: 10px 10px 0px #fbbf24; }
+        .glass { background: rgba(20, 20, 20, 0.7); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); }
+        body { background-color: #000; color: #fff; font-family: 'Inter', sans-serif; }
+        .cyber-bg { background-image: radial-gradient(#1a1a1a 1px, transparent 1px); background-size: 20px 20px; }
+    </style>
+</head>
+<body class="cyber-bg p-6">
+
+    <div class="max-w-5xl mx-auto">
+        <!-- Brand Header -->
+        <header class="flex justify-between items-center mb-12 py-6 border-b-2 border-yellow-400">
+            <h1 class="text-5xl font-black italic tracking-tighter">FAT<span class="text-yellow-400">SOCIAL</span></h1>
+            <div class="text-right">
+                <span class="block text-xs font-mono text-yellow-400 font-bold uppercase">Network Status: Online</span>
+                <span class="text-[10px] text-zinc-500 font-mono uppercase">Node: Miami_Global_01</span>
+            </div>
+        </header>
+
+        <!-- Main Catalog -->
+        <div id="catalog" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Items Injected Here -->
+        </div>
+
+        <!-- Verification Queue / Live Feed (Trust Builder) -->
+        <section class="mt-20">
+            <h2 class="text-xs font-bold uppercase tracking-[0.3em] text-zinc-500 mb-6 italic">// RECENT_VERIFICATIONS</h2>
+            <div class="glass p-4 font-mono text-[10px] text-zinc-400 space-y-2 border-l-4 border-yellow-400">
+                <p>> [OK] USER_4829 PURCHASED: FB_AGED_2017 ... <span class="text-green-500">SUCCESS</span></p>
+                <p>> [OK] USER_9910 PURCHASED: TIKTOK_GROWTH_PACK ... <span class="text-green-500">SUCCESS</span></p>
+                <p>> [OK] USER_1102 PURCHASED: IG_VERIFIED_ASSET ... <span class="text-green-500">SUCCESS</span></p>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        async function fetchInventory() {
+            const res = await fetch('inventory.json');
+            const data = await res.json();
+            const container = document.getElementById('catalog');
+            
+            data.forEach(item => {
+                container.innerHTML += `
+                    <div class="glass p-6 neo-brutal hover:scale-[1.02] transition-transform">
+                        <div class="flex justify-between items-center mb-6">
+                            <span class="text-[10px] font-bold bg-yellow-400 text-black px-2 py-0.5 uppercase tracking-tighter">${item.category}</span>
+                            <span class="text-[10px] text-zinc-500">REF: FS-${Math.floor(Math.random()*900)+100}</span>
+                        </div>
+                        <h3 class="text-2xl font-black uppercase mb-2 leading-none">${item.name}</h3>
+                        <p class="text-xs text-zinc-400 mb-8 h-8">${item.description}</p>
+                        <div class="flex justify-between items-end">
+                            <div class="font-mono">
+                                <span class="text-[10px] block text-zinc-500 uppercase">Price</span>
+                                <span class="text-xl font-bold text-yellow-400">${item.price}</span>
+                            </div>
+                            <button onclick="order('${item.name}')" class="bg-white text-black font-black px-4 py-2 text-xs uppercase hover:bg-yellow-400 transition">Request Access</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function order(name) {
+            const msg = encodeURIComponent(`FATSOCIAL INQUIRY: I want to secure the [${name}] asset.`);
+            window.location.href = `https://t.me/YOUR_TELEGRAM?text=${msg}`;
+        }
+        fetchInventory();
+    </script>
+</body>
+</html>
