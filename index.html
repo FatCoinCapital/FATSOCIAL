@@ -3,76 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FATSOCIAL | Entry Terminal</title>
+    <title>FATSOCIAL | Digital Asset Terminal</title>
+    <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Professional Bold Font (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        /* Neo-Brutalist styling with Blue/White palette */
-        .neo-button { border: 3px solid #000; box-shadow: 5px 5px 0px #000; transition: 0.2s; }
-        .neo-button:active { box-shadow: 0px 0px 0px #000; transform: translate(5px, 5px); }
-        .input-field { border: 2px solid #cbd5e1; padding: 12px; border-radius: 0px; outline: none; }
-        .input-field:focus { border-color: #1e40af; }
-        body { background-color: #f8fafc; font-family: 'Inter', sans-serif; }
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; }
+        /* Neo-Brutalist elements */
+        .neo-box { border: 3px solid #000; box-shadow: 10px 10px 0px #000; }
+        .input-focus:focus { border-color: #1e40af; ring: 2px solid #1e40af; }
+        .hidden { display: none; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col md:flex-row">
 
-    <!-- Top Branding Section (Blue) -->
-    <section class="bg-[#1e40af] text-white p-12 text-center flex-grow flex flex-col justify-center">
-        <h1 class="text-6xl font-black italic tracking-tighter uppercase mb-4">FAT<span class="text-blue-200">SOCIAL</span></h1>
-        <p class="text-blue-100 font-mono text-sm uppercase tracking-widest">Global Asset Access & Verification</p>
-    </section>
-
-    <!-- Entry Section (White) -->
-    <section class="bg-white p-8 md:p-16 -mt-12 mx-auto max-w-lg w-full shadow-2xl border-t-4 border-black">
-        <div id="auth-container">
-            <h2 id="form-title" class="text-3xl font-black uppercase mb-2">Login</h2>
-            <p id="form-subtitle" class="text-xs text-slate-500 mb-8 uppercase font-bold tracking-widest italic">Identity Verification Required</p>
-
-            <form class="space-y-4">
-                <input type="email" placeholder="Email Address" class="input-field w-full">
-                <input type="password" placeholder="Secure Password" class="input-field w-full">
-                
-                <!-- This field only shows during "Create Account" -->
-                <div id="signup-fields" class="hidden">
-                    <input type="text" placeholder="Phone Number (For 2FA)" class="input-field w-full mt-4">
+    <!-- LEFT SIDE: Branding / Visual (Navy Blue) -->
+    <section class="md:w-1/2 bg-[#1e40af] text-white p-12 flex flex-col justify-center items-center text-center">
+        <div class="max-w-md">
+            <h1 class="text-7xl font-[900] uppercase tracking-tighter mb-4 leading-none">FAT SOCIAL</h1>
+            <div class="h-2 w-24 bg-white mb-6 mx-auto"></div>
+            <p class="text-blue-100 font-bold uppercase tracking-widest text-sm">International Account Assets & Engagement</p>
+            
+            <div class="mt-12 hidden md:block">
+                <div class="p-4 border-2 border-blue-400 bg-blue-900/30 text-left font-mono text-xs space-y-1">
+                    <p class="text-blue-300 uppercase font-black">// System_Log</p>
+                    <p>> AUTH_MODULE: READY</p>
+                    <p>> ENCRYPTION: ACTIVE</p>
+                    <p>> DATABASE: CONNECTED</p>
                 </div>
-
-                <button type="submit" class="neo-button w-full bg-[#1e40af] text-white font-black py-4 uppercase mt-6">
-                    Enter Terminal
-                </button>
-            </form>
-
-            <div class="mt-10 pt-6 border-t border-slate-200 flex justify-between items-center">
-                <span id="toggle-label" class="text-xs font-bold text-slate-400 uppercase">New Agent?</span>
-                <button onclick="toggleAuth()" id="toggle-btn" class="text-xs font-black uppercase underline underline-offset-4">Create Account</button>
             </div>
         </div>
     </section>
 
-    <footer class="p-6 text-center text-[10px] text-slate-400 font-mono uppercase">
-        System Status: <span class="text-green-600">Secure</span> | UTC: <span id="time"></span>
-    </footer>
+    <!-- RIGHT SIDE: Auth Forms (White) -->
+    <section class="md:w-1/2 p-6 md:p-12 flex flex-col justify-center items-center">
+        
+        <!-- LOGIN SECTION -->
+        <div id="login-section" class="w-full max-w-md bg-white p-8 md:p-10 neo-box">
+            <h2 class="text-4xl font-[900] uppercase tracking-tight text-black mb-2">Sign In</h2>
+            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-8">Access your digital vault</p>
+
+            <form class="space-y-4">
+                <div>
+                    <label class="block text-[10px] font-black uppercase mb-1">Username or Email</label>
+                    <input type="text" placeholder="Enter credentials" class="w-full p-4 border-2 border-slate-200 outline-none input-focus font-bold transition-all">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-black uppercase mb-1">Password</label>
+                    <input type="password" placeholder="••••••••" class="w-full p-4 border-2 border-slate-200 outline-none input-focus font-bold transition-all">
+                </div>
+                <button type="submit" class="w-full bg-[#1e40af] text-white font-black py-5 uppercase tracking-widest hover:bg-black transition-colors">
+                    Login to Terminal
+                </button>
+            </form>
+
+            <div class="mt-8 pt-6 border-t-2 border-slate-100 flex justify-between items-center">
+                <span class="text-[10px] font-bold uppercase text-slate-400 italic">No account?</span>
+                <button onclick="toggleAuth('signup')" class="text-xs font-black uppercase underline decoration-2 underline-offset-4 hover:text-[#1e40af]">Create Account</button>
+            </div>
+        </div>
+
+        <!-- SIGN UP SECTION (Hidden by default) -->
+        <div id="signup-section" class="w-full max-w-md bg-white p-8 md:p-10 neo-box hidden">
+            <h2 class="text-4xl font-[900] uppercase tracking-tight text-black mb-2">Register</h2>
+            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-8">Initialize your agent node</p>
+
+            <form class="space-y-4">
+                <!-- Names Side-by-Side -->
+                <div class="flex gap-4">
+                    <div class="w-1/2">
+                        <label class="block text-[10px] font-black uppercase mb-1">First Name</label>
+                        <input type="text" placeholder="John" class="w-full p-4 border-2 border-slate-200 outline-none input-focus font-bold transition-all">
+                    </div>
+                    <div class="w-1/2">
+                        <label class="block text-[10px] font-black uppercase mb-1">Last Name</label>
+                        <input type="text" placeholder="Doe" class="w-full p-4 border-2 border-slate-200 outline-none input-focus font-bold transition-all">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[10px] font-black uppercase mb-1">Username</label>
+                    <input type="text" placeholder="fat_agent_01" class="w-full p-4 border-2 border-slate-200 outline-none input-focus font-bold transition-all">
+                </div>
+
+                <div>
+                    <label class="block text-[10px] font-black uppercase mb-1">Email Address</label>
+                    <input type="email" placeholder="agent@fatsocial.com" class="w-full p-4 border-2 border-slate-200 outline-none input-focus font-bold transition-all">
+                </div>
+
+                <div>
+                    <label class="block text-[10px] font-black uppercase mb-1">Password</label>
+                    <input type="password" placeholder="••••••••" class="w-full p-4 border-2 border-slate-200 outline-none input-focus font-bold transition-all">
+                </div>
+
+                <div>
+                    <label class="block text-[10px] font-black uppercase mb-1">Retype Password</label>
+                    <input type="password" placeholder="••••••••" class="w-full p-4 border-2 border-slate-200 outline-none input-focus font-bold transition-all">
+                </div>
+
+                <button type="submit" class="w-full bg-[#1e40af] text-white font-black py-5 uppercase tracking-widest hover:bg-black transition-colors">
+                    Initialize Account
+                </button>
+            </form>
+
+            <div class="mt-8 pt-6 border-t-2 border-slate-100 flex justify-between items-center">
+                <span class="text-[10px] font-bold uppercase text-slate-400 italic">Existing user?</span>
+                <button onclick="toggleAuth('login')" class="text-xs font-black uppercase underline decoration-2 underline-offset-4 hover:text-[#1e40af]">Back to Login</button>
+            </div>
+        </div>
+
+    </section>
 
     <script>
-        // Toggle Logic inspired by image.png
-        let isLogin = true;
-        function toggleAuth() {
-            isLogin = !isLogin;
-            const title = document.getElementById('form-title');
-            const btn = document.getElementById('toggle-btn');
-            const label = document.getElementById('toggle-label');
-            const extraFields = document.getElementById('signup-fields');
+        function toggleAuth(type) {
+            const login = document.getElementById('login-section');
+            const signup = document.getElementById('signup-section');
 
-            title.innerText = isLogin ? "Login" : "Sign Up";
-            btn.innerText = isLogin ? "Create Account" : "Back to Login";
-            label.innerText = isLogin ? "New Agent?" : "Already Registered?";
-            extraFields.classList.toggle('hidden');
+            if (type === 'signup') {
+                login.classList.add('hidden');
+                signup.classList.remove('hidden');
+            } else {
+                signup.classList.add('hidden');
+                login.classList.remove('hidden');
+            }
         }
-
-        // Live Clock
-        setInterval(() => {
-            document.getElementById('time').innerText = new Date().toUTCString();
-        }, 1000);
     </script>
 </body>
 </html>
