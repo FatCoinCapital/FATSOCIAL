@@ -3,75 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FATSOCIAL | Digital Asset Marketplace</title>
+    <title>FATSOCIAL | Entry Terminal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .neo-brutal { border: 3px solid #000; box-shadow: 10px 10px 0px #fbbf24; }
-        .glass { background: rgba(20, 20, 20, 0.7); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); }
-        body { background-color: #000; color: #fff; font-family: 'Inter', sans-serif; }
-        .cyber-bg { background-image: radial-gradient(#1a1a1a 1px, transparent 1px); background-size: 20px 20px; }
+        /* Neo-Brutalist styling with Blue/White palette */
+        .neo-button { border: 3px solid #000; box-shadow: 5px 5px 0px #000; transition: 0.2s; }
+        .neo-button:active { box-shadow: 0px 0px 0px #000; transform: translate(5px, 5px); }
+        .input-field { border: 2px solid #cbd5e1; padding: 12px; border-radius: 0px; outline: none; }
+        .input-field:focus { border-color: #1e40af; }
+        body { background-color: #f8fafc; font-family: 'Inter', sans-serif; }
     </style>
 </head>
-<body class="cyber-bg p-6">
+<body class="min-h-screen flex flex-col">
 
-    <div class="max-w-5xl mx-auto">
-        <!-- Brand Header -->
-        <header class="flex justify-between items-center mb-12 py-6 border-b-2 border-yellow-400">
-            <h1 class="text-5xl font-black italic tracking-tighter">FAT<span class="text-yellow-400">SOCIAL</span></h1>
-            <div class="text-right">
-                <span class="block text-xs font-mono text-yellow-400 font-bold uppercase">Network Status: Online</span>
-                <span class="text-[10px] text-zinc-500 font-mono uppercase">Node: Miami_Global_01</span>
+    <!-- Top Branding Section (Blue) -->
+    <section class="bg-[#1e40af] text-white p-12 text-center flex-grow flex flex-col justify-center">
+        <h1 class="text-6xl font-black italic tracking-tighter uppercase mb-4">FAT<span class="text-blue-200">SOCIAL</span></h1>
+        <p class="text-blue-100 font-mono text-sm uppercase tracking-widest">Global Asset Access & Verification</p>
+    </section>
+
+    <!-- Entry Section (White) -->
+    <section class="bg-white p-8 md:p-16 -mt-12 mx-auto max-w-lg w-full shadow-2xl border-t-4 border-black">
+        <div id="auth-container">
+            <h2 id="form-title" class="text-3xl font-black uppercase mb-2">Login</h2>
+            <p id="form-subtitle" class="text-xs text-slate-500 mb-8 uppercase font-bold tracking-widest italic">Identity Verification Required</p>
+
+            <form class="space-y-4">
+                <input type="email" placeholder="Email Address" class="input-field w-full">
+                <input type="password" placeholder="Secure Password" class="input-field w-full">
+                
+                <!-- This field only shows during "Create Account" -->
+                <div id="signup-fields" class="hidden">
+                    <input type="text" placeholder="Phone Number (For 2FA)" class="input-field w-full mt-4">
+                </div>
+
+                <button type="submit" class="neo-button w-full bg-[#1e40af] text-white font-black py-4 uppercase mt-6">
+                    Enter Terminal
+                </button>
+            </form>
+
+            <div class="mt-10 pt-6 border-t border-slate-200 flex justify-between items-center">
+                <span id="toggle-label" class="text-xs font-bold text-slate-400 uppercase">New Agent?</span>
+                <button onclick="toggleAuth()" id="toggle-btn" class="text-xs font-black uppercase underline underline-offset-4">Create Account</button>
             </div>
-        </header>
-
-        <!-- Main Catalog -->
-        <div id="catalog" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Items Injected Here -->
         </div>
+    </section>
 
-        <!-- Verification Queue / Live Feed (Trust Builder) -->
-        <section class="mt-20">
-            <h2 class="text-xs font-bold uppercase tracking-[0.3em] text-zinc-500 mb-6 italic">// RECENT_VERIFICATIONS</h2>
-            <div class="glass p-4 font-mono text-[10px] text-zinc-400 space-y-2 border-l-4 border-yellow-400">
-                <p>> [OK] USER_4829 PURCHASED: FB_AGED_2017 ... <span class="text-green-500">SUCCESS</span></p>
-                <p>> [OK] USER_9910 PURCHASED: TIKTOK_GROWTH_PACK ... <span class="text-green-500">SUCCESS</span></p>
-                <p>> [OK] USER_1102 PURCHASED: IG_VERIFIED_ASSET ... <span class="text-green-500">SUCCESS</span></p>
-            </div>
-        </section>
-    </div>
+    <footer class="p-6 text-center text-[10px] text-slate-400 font-mono uppercase">
+        System Status: <span class="text-green-600">Secure</span> | UTC: <span id="time"></span>
+    </footer>
 
     <script>
-        async function fetchInventory() {
-            const res = await fetch('inventory.json');
-            const data = await res.json();
-            const container = document.getElementById('catalog');
-            
-            data.forEach(item => {
-                container.innerHTML += `
-                    <div class="glass p-6 neo-brutal hover:scale-[1.02] transition-transform">
-                        <div class="flex justify-between items-center mb-6">
-                            <span class="text-[10px] font-bold bg-yellow-400 text-black px-2 py-0.5 uppercase tracking-tighter">${item.category}</span>
-                            <span class="text-[10px] text-zinc-500">REF: FS-${Math.floor(Math.random()*900)+100}</span>
-                        </div>
-                        <h3 class="text-2xl font-black uppercase mb-2 leading-none">${item.name}</h3>
-                        <p class="text-xs text-zinc-400 mb-8 h-8">${item.description}</p>
-                        <div class="flex justify-between items-end">
-                            <div class="font-mono">
-                                <span class="text-[10px] block text-zinc-500 uppercase">Price</span>
-                                <span class="text-xl font-bold text-yellow-400">${item.price}</span>
-                            </div>
-                            <button onclick="order('${item.name}')" class="bg-white text-black font-black px-4 py-2 text-xs uppercase hover:bg-yellow-400 transition">Request Access</button>
-                        </div>
-                    </div>
-                `;
-            });
+        // Toggle Logic inspired by image.png
+        let isLogin = true;
+        function toggleAuth() {
+            isLogin = !isLogin;
+            const title = document.getElementById('form-title');
+            const btn = document.getElementById('toggle-btn');
+            const label = document.getElementById('toggle-label');
+            const extraFields = document.getElementById('signup-fields');
+
+            title.innerText = isLogin ? "Login" : "Sign Up";
+            btn.innerText = isLogin ? "Create Account" : "Back to Login";
+            label.innerText = isLogin ? "New Agent?" : "Already Registered?";
+            extraFields.classList.toggle('hidden');
         }
 
-        function order(name) {
-            const msg = encodeURIComponent(`FATSOCIAL INQUIRY: I want to secure the [${name}] asset.`);
-            window.location.href = `https://t.me/YOUR_TELEGRAM?text=${msg}`;
-        }
-        fetchInventory();
+        // Live Clock
+        setInterval(() => {
+            document.getElementById('time').innerText = new Date().toUTCString();
+        }, 1000);
     </script>
 </body>
 </html>
